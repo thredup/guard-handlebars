@@ -15,7 +15,9 @@ module Guard
     def compile_handlebars file
       content = File.new(file).read
       begin
-        `handlebars #{file} -f #{get_output(file)}.js`
+        com = "handlebars #{file}"
+        result = `#{com}`
+        result
       rescue StandardError => error
         puts "ERROR COMPILING #{file}"
       end
@@ -30,6 +32,9 @@ module Guard
     def get_output(file)
       file_dir = File.dirname(file)
       file_name = File.basename(file).split('.')[0..-2].join('.')
+      unless file_name =~ /\.js$/
+        file_name << ".js"
+      end
       
       file_dir = file_dir.gsub(Regexp.new("#{@options[:input]}(\/){0,1}"), '') if @options[:input]
       file_dir = File.join(@options[:output], file_dir) if @options[:output]
