@@ -15,8 +15,7 @@ module Guard
     def compile_handlebars file
       content = File.new(file).read
       begin
-        # compile
-        puts "COMPILING #{file}"
+        `handlebars #{file} -f #{get_output(file)}`
       rescue StandardError => error
         puts "ERROR COMPILING #{file}"
       end
@@ -50,9 +49,9 @@ module Guard
       paths.each do |file|
         output_file = get_output(file)
         FileUtils.mkdir_p File.dirname(output_file)
-        File.open(output_file, 'w') { |f| f.write(compile_haml(file)) }
-        ::Guard::UI.info "# compiled haml in '#{file}' to html in '#{output_file}'"
-        ::Guard::Notifier.notify("# compiled haml in #{file}", :title => "Guard::Haml", :image => :success) if @options[:notifications]
+        File.open(output_file, 'w') { |f| f.write(compile_handlebars(file)) }
+        ::Guard::UI.info "# compiled handlebars in '#{file}' to js in '#{output_file}'"
+        ::Guard::Notifier.notify("# compiled handlebars in #{file}", :title => "Guard::Handlebars", :image => :success) if @options[:notifications]
       end
       notify paths
     end
