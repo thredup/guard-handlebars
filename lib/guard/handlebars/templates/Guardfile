@@ -1,3 +1,3 @@
 guard 'handlebars' do
-  watch(/^.+(\.html)?(\.handlebars)/)
+  watch(/^.+(\.html)?(\.handlebars)$/)
 end

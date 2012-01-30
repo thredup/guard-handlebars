@@ -15,7 +15,7 @@ module Guard
     def compile_handlebars file
       content = File.new(file).read
       begin
-        `handlebars #{file} -f #{get_output(file)}`
+        `handlebars #{file} -f #{get_output(file)}.js`
       rescue StandardError => error
         puts "ERROR COMPILING #{file}"
       end
